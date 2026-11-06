@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>成果物：Applied Notional Project　中古車リース 車両と不具合の管理</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef1f3; --surface:#ffffff; --ink:#1d2a33; --sub:#5a6b77; --line:#cfd8de;
+  --road:#2f4250; --amber:#b86e00; --amber-bg:#fff2dc; --ok:#1f6f5c; --ok-bg:#e1f2ec;
+  --red:#a8322a; --red-bg:#fbe6e3; --focus:#2a6fdb;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#151c21; --surface:#1e282f; --ink:#e3eaee; --sub:#9db0bc; --line:#33434e;
+    --road:#a9c3d3; --amber:#f0b24a; --amber-bg:#3a2c12; --ok:#6fcfb0; --ok-bg:#17342c;
+    --red:#f08a80; --red-bg:#3d1d1a; --focus:#7fb0ff; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#151c21; --surface:#1e282f; --ink:#e3eaee; --sub:#9db0bc; --line:#33434e;
+  --road:#a9c3d3; --amber:#f0b24a; --amber-bg:#3a2c12; --ok:#6fcfb0; --ok-bg:#17342c;
+  --red:#f08a80; --red-bg:#3d1d1a; --focus:#7fb0ff; color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"BIZ UDPGothic","Hiragino Sans","Yu Gothic UI",Meiryo,sans-serif;font-size:15px;line-height:1.7}
+header{background:var(--road);color:#fff;padding:20px 20px 0}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) header{color:#151c21}}
+:root[data-theme="dark"] header{color:#151c21}
+.wrap{max-width:1180px;margin:0 auto}
+h1{font-size:1.35rem;margin:0 0 4px}
+.lead{margin:0 0 16px;max-width:72ch;opacity:.9;font-size:.92rem}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav button{font:inherit;border:0;background:transparent;color:inherit;padding:10px 16px;border-radius:8px 8px 0 0;cursor:pointer;opacity:.8}
+nav button[aria-selected="true"]{background:var(--bg);color:var(--ink);opacity:1;font-weight:700}
+button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,tr:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+main{padding:20px}
+section[hidden]{display:none}
+.note{background:var(--surface);border-left:4px solid var(--road);padding:12px 16px;margin:0 0 20px;max-width:80ch;font-size:.9rem;color:var(--sub)}
+h2{font-size:1.15rem;margin:0 0 12px}
+h3{font-size:1rem;margin:20px 0 8px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+.kpi{background:var(--surface);border:1px solid var(--line);padding:12px 14px;border-radius:6px}
+.kpi b{display:block;font-size:1.7rem;line-height:1.2}
+.kpi span{color:var(--sub);font-size:.85rem}
+.kpi.warn b{color:var(--amber)}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;align-items:end}
+.tools label{display:flex;flex-direction:column;font-size:.8rem;color:var(--sub)}
+select,input,textarea{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:6px 8px}
+.scroll{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:6px}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{color:var(--sub);font-weight:700;background:var(--bg)}
+tbody tr.click{cursor:pointer}
+tbody tr.click:hover{background:var(--bg)}
+tr.sel{background:var(--amber-bg)!important}
+.tag{display:inline-block;padding:1px 8px;border-radius:10px;font-size:.8rem;font-weight:700}
+.t-hi{background:var(--red-bg);color:var(--red)}
+.t-mid{background:var(--amber-bg);color:var(--amber)}
+.t-lo{background:var(--bg);color:var(--sub);border:1px solid var(--line)}
+.t-done{background:var(--ok-bg);color:var(--ok)}
+.split{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:860px){.split{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px 16px}
+.panel dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:0}
+.panel dt{color:var(--sub)}
+.panel dd{margin:0}
+.btn{font:inherit;border:1px solid var(--road);background:var(--road);color:#fff;border-radius:6px;padding:6px 14px;cursor:pointer}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn{color:#151c21}}
+:root[data-theme="dark"] .btn{color:#151c21}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.empty{color:var(--sub);padding:16px}
+.rules{counter-reset:r;list-style:none;padding:0;margin:0 0 16px}
+.rules li{counter-increment:r;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 14px 10px 48px;margin-bottom:8px;position:relative}
+.rules li::before{content:counter(r);position:absolute;left:14px;top:10px;width:24px;height:24px;border-radius:50%;background:var(--road);color:#fff;text-align:center;line-height:24px;font-size:.8rem;font-weight:700}
+.rules li small{color:var(--sub)}
+.cnt{float:right;font-weight:700;color:var(--amber)}
+del{color:var(--red)}
+ins{color:var(--ok);text-decoration:none;font-weight:700}
+.log{font-size:.85rem;color:var(--sub);margin:6px 0 0;padding-left:18px}
+.map td{white-space:normal}
+footer{padding:0 20px 28px;color:var(--sub);font-size:.8rem}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+ <div class="wrap">
+  <p style="margin:0 0 4px;font-size:.9rem;opacity:.9">Palantir Learn「Applied Notional Project」の成果物（作成：樋口隆史）</p>
+  <h1>中古車リース　車両と不具合の管理</h1>
+  <p class="lead">リース担当マネージャーが、保有車両を見渡し、1台ずつ確かめ、不具合を解決するための画面です。</p>
+  <nav role="tablist">
+   <button role="tab" id="tab-clean" aria-selected="false" data-v="clean">目的1　データの掃除</button>
+   <button role="tab" id="tab-cars" aria-selected="true" data-v="cars">目的2　車両一覧</button>
+   <button role="tab" id="tab-inbox" aria-selected="false" data-v="inbox">目的3　不具合の受付箱</button>
+   <button role="tab" id="tab-map" aria-selected="false" data-v="map">Foundryとの対応</button>
+  </nav>
+ </div>
+</header>
+<main class="wrap">
+ <p class="note">これは、Palantir Learn の課題「Applied Notional Project」の成果物です。課題で公開されている概要（中古車リース会社の担当マネージャーが、保有車両を見渡し、車両を確かめ、不具合を解決するアプリ。目的は データの掃除／車両一覧／不具合の受付箱 の3つ）に沿って、同じ3つの目的を Foundry の外で動く形で作りました。車両と不具合のデータはすべて架空です。基準日は2026年10月24日として計算しています。</p>
+
+ <section id="v-clean" hidden>
+  <h2>目的1　データの掃除</h2>
+  <p>受け取った生データ（車両 <b id="rawCarN"></b> 行・不具合 <b id="rawIssueN"></b> 行）を、次の7つの規則で直してから画面に使っています。各規則の右の数は、その規則で直した、または外した行数です。</p>
+  <ol class="rules" id="rules"></ol>
+  <h3>直した行（変更前 → 変更後）</h3>
+  <div class="scroll"><table><thead><tr><th>データ</th><th>行</th><th>規則</th><th>変更前</th><th>変更後</th></tr></thead><tbody id="diff"></tbody></table></div>
+ </section>
+
+ <section id="v-cars">
+  <div class="kpis" id="kpis"></div>
+  <div class="split">
+   <div>
+    <div class="tools">
+     <label>状態<select id="fStatus"><option value="">すべて</option><option>貸出中</option><option>待機</option><option>整備中</option></select></label>
+     <label>メーカー<select id="fMake"><option value="">すべて</option></select></label>
+     <label>未解決の不具合<select id="fOpen"><option value="">問わない</option><option value="1">あり</option></select></label>
+     <label>検索<input id="fQ" placeholder="車両ID・メーカー・車種"></label>
+    </div>
+    <div class="scroll"><table><thead><tr><th>車両ID</th><th>メーカー</th><th>車種</th><th>年式</th><th>走行距離</th><th>状態</th><th>未解決の不具合</th></tr></thead><tbody id="carRows"></tbody></table></div>
+   </div>
+   <div class="panel" id="carPanel" aria-live="polite"><p class="empty">一覧の行を選ぶと、その車両の詳細とつながっている不具合が出ます。</p></div>
+  </div>
+ </section>
+
+ <section id="v-inbox" hidden>
+  <div class="kpis" id="ikpis"></div>
+  <div class="split">
+   <div>
+    <div class="tools">
+     <label>状態<select id="iStatus"><option value="open">未解決</option><option>解決済</option><option value="">すべて</option></select></label>
+     <label>重要度<select id="iSev"><option value="">すべて</option><option>高</option><option>中</option><option>低</option></select></label>
+    </div>
+    <div class="scroll"><table><thead><tr><th>不具合ID</th><th>重要度</th><th>内容</th><th>車両</th><th>経過日数</th><th>状態</th></tr></thead><tbody id="issueRows"></tbody></table></div>
+    <p style="font-size:.85rem;color:var(--sub)">並び順は、重要度の高い順、同じ重要度なら届いてからの日数が長い順です。</p>
+   </div>
+   <div class="panel" id="issuePanel" aria-live="polite"><p class="empty">一覧の行を選ぶと、対応の記録を書いて解決にできます。</p></div>
+  </div>
+  <div class="row"><button class="btn ghost" id="reset">操作の記録を消して最初の状態に戻す</button></div>
+ </section>
+
+ <section id="v-map" hidden>
+  <h2>Foundryとの対応</h2>
+  <p>この画面の各部分が、Foundry でいえばどの道具で作るものにあたるかを並べました。</p>
+  <div class="scroll"><table class="map"><thead><tr><th>この画面</th><th>Foundryでの作り方</th></tr></thead><tbody>
+   <tr><td>目的1　7つの規則で生データを直す</td><td>Pipeline Builder（データの変換を組み立てる道具）で、文字の整形・型の変換・重複の除去・結合を順につなぐ</td></tr>
+   <tr><td>車両と不具合という2つのまとまり、車両1台に不具合が複数つながる関係</td><td>Ontology Manager で、オブジェクトの型「車両」「不具合」と、その間のリンクの型を定める</td></tr>
+   <tr><td>目的2　車両一覧、絞り込み、詳細と関連する不具合</td><td>Workshop（業務画面を組み立てる道具）で、一覧・絞り込み・詳細の部品を並べる</td></tr>
+   <tr><td>目的3　対応の記録を書いて解決にする、未解決に戻す</td><td>Action（オブジェクトを書き換える操作）を定め、Workshop のボタンから呼ぶ。誰がいつ何をしたかは操作の記録として残る</td></tr>
+  </tbody></table></div>
+ </section>
+</main>
+<footer class="wrap">この画面での操作（解決・未解決に戻す）は、この端末のブラウザにだけ保存されます。ほかの人には共有されません。</footer>
+
+<script>
+(function(){
+const TODAY = new Date("2026-10-24T00:00:00");
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+/* ---------- 生データ（架空。表記ゆれ・型の乱れ・重複・孤立を意図して含む） ---------- */
+const RAW_CARS = [
+ [" c-001","toyota","プリウス","2019","48,210 km","貸出中"],
+ ["C-002","トヨタ","アクア","2020","31200","待機"],
+ ["C-003","HONDA","フィット","2018","72,900km","貸出中"],
+ ["c-004 ","ホンダ","N-BOX","2021","19,880 km","整備中"],
+ ["C-005","Nissan","ノート","2019","55,430","貸出中"],
+ ["C-006","日産","セレナ","2017","98,120 km","貸出中"],
+ ["C-007","MAZDA","CX-5","2020","40,050 km","待機"],
+ ["C-008","マツダ","デミオ","2016","110,300km","整備中"],
+ ["C-009","subaru","インプレッサ","2019","61,700","貸出中"],
+ ["C-010","スズキ","スペーシア","2022","12,400 km","貸出中"],
+ ["C-011","SUZUKI","ハスラー","2021","23,900 km","待機"],
+ ["c-012","Toyota","ハイエース","2018","134,550 km","貸出中"],
+ ["C-013","ダイハツ","タント","2020","28,300","貸出中"],
+ ["C-014","daihatsu","ムーヴ","2017","86,020km","整備中"],
+ ["C-015","トヨタ","ヤリス","2022","9,870 km","貸出中"],
+ ["C-016","Honda","フリード","2019","58,400 km","貸出中"],
+ ["C-017","日産","デイズ","2021","21,050","待機"],
+ ["C-018","マツダ","CX-3","2018","69,930 km","貸出中"],
+ ["C-003","HONDA","フィット","2018","72,900km","貸出中"],
+ ["C-010","スズキ","スペーシア","2022","12,400 km","貸出中"]
+];
+const RAW_ISSUES = [
+ ["I-101"," c-001","タイヤの空気圧低下の警告","Medium","2026/10/20","未解決"],
+ ["I-102","C-003","エアコンから異音","中","2026.10.02","未解決"],
+ ["I-103","c-004","定期点検（車検前整備）","low","20261015","未解決"],
+ ["I-104","C-006","ブレーキの効きが弱い","High","2026/10/22","未解決"],
+ ["I-105","C-008","オイル漏れ","高","2026/10/05","未解決"],
+ ["I-106","C-009","フロントガラスの飛び石傷","L","2026/09/28","未解決"],
+ ["I-107","c-012","走行距離が整備基準を超過","H","2026/10/18","未解決"],
+ ["I-108","C-012","後部ドアの閉まりが悪い","中","2026/10/11","未解決"],
+ ["I-109","C-014","バッテリー上がり","high","2026/10/21","未解決"],
+ ["I-110","C-016","ナビの地図更新","低","2026/09/15","未解決"],
+ ["I-111","C-018","右後方のこすり傷","M","2026/10/09","未解決"],
+ ["I-112","C-099","ドライブレコーダー故障","中","2026/10/12","未解決"],
+ ["I-113","C-005","オイル交換時期の通知","低","2026/10/01","解決済"],
+ ["I-114","C-013","スライドドアの警告灯","高","2026/10/23","未解決"],
+ ["I-115","C-020","鍵の紛失","中","2026/10/14","未解決"]
+];
+
+/* ---------- 目的1：掃除の規則 ---------- */
+const MAKE = {"toyota":"トヨタ","honda":"ホンダ","nissan":"日産","mazda":"マツダ","subaru":"スバル","suzuki":"スズキ","daihatsu":"ダイハツ"};
+const SEV = {"high":"高","h":"高","高":"高","medium":"中","m":"中","中":"中","low":"低","l":"低","低":"低"};
+const rules = [
+ {k:"id",   t:"車両IDの前後の空白を取り、大文字にそろえる", d:"「 c-001」と「C-001」を同じ車両として扱うため"},
+ {k:"make", t:"メーカー名の表記ゆれをカタカナ・漢字にそろえる", d:"toyota／Toyota／トヨタ を トヨタ に"},
+ {k:"km",   t:"走行距離を数値にする", d:"「48,210 km」の区切りと単位を外す"},
+ {k:"date", t:"不具合の受付日を年-月-日の形にそろえる", d:"2026/10/20、2026.10.02、20261015 の3通りが混在"},
+ {k:"dup",  t:"同じ車両IDの重複行を1行にする", d:"同じ内容の行が2回届いていた"},
+ {k:"sev",  t:"不具合の重要度を 高・中・低 にそろえる", d:"High／H／high／高 を 高 に"},
+ {k:"orph", t:"存在しない車両を指す不具合を外し、確認待ちに回す", d:"車両の一覧にない車両IDを指している"}
+];
+const counts = {}; rules.forEach(r => counts[r.k] = 0);
+const diffs = [];
+function note(src,row,k,before,after){ counts[k]++; diffs.push({src,row,k,before,after}); }
+function normId(v,src,row){ const a=v.trim().toUpperCase(); if(a!==v) note(src,row,"id",v,a); return a; }
+function normDate(v,src,row){
+  if(!v) return "";
+  let m = v.match(/^(\d{4})[\/.](\d{1,2})[\/.](\d{1,2})$/) || v.match(/^(\d{4})(\d{2})(\d{2})$/);
+  if(!m) return v;
+  const a = `${m[1]}-${m[2].padStart(2,"0")}-${m[3].padStart(2,"0")}`;
+  if(a!==v) note(src,row,"date",v,a);
+  return a;
+}
+const cars = []; const seen = new Set();
+RAW_CARS.forEach((r,i)=>{
+  const row=i+1, id0=r[0].trim().toUpperCase();
+  if(seen.has(id0)){ note("車両",row,"dup",id0+"（"+r[2]+"）","削除"); return; }
+  const id=normId(r[0],"車両",row);
+  const mk = MAKE[r[1].toLowerCase()] || r[1]; if(mk!==r[1]) note("車両",row,"make",r[1],mk);
+  const km = Number(r[4].replace(/[^\d]/g,"")); if(String(km)!==r[4]) note("車両",row,"km",r[4],km.toLocaleString("ja-JP"));
+  seen.add(id);
+  cars.push({id,make:mk,model:r[2],year:Number(r[3]),km,status:r[5]});
+});
+const baseIssues = []; const held = [];
+RAW_ISSUES.forEach((r,i)=>{
+  const row=i+1, carId=normId(r[1],"不具合",row);
+  const sev = SEV[r[3].toLowerCase()] || r[3]; if(sev!==r[3]) note("不具合",row,"sev",r[3],sev);
+  const date = normDate(r[4],"不具合",row);
+  if(!seen.has(carId)){ note("不具合",row,"orph",r[0]+"（"+carId+"）","確認待ちへ"); held.push(r[0]); return; }
+  baseIssues.push({id:r[0],carId,title:r[2],sev,date,status:r[5],log:[]});
+});
+
+/* ---------- 書き戻し（操作）の保存 ---------- */
+const KEY="anp-fleet-v2";
+let ops=[]; try{ ops = JSON.parse(localStorage.getItem(KEY)||"[]"); }catch(e){ ops=[]; }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(ops)); }catch(e){} }
+let issues=[];
+function rebuild(){
+  issues = baseIssues.map(x=>({...x,log:[]}));
+  ops.forEach(o=>{
+    const it = issues.find(x=>x.id===o.id); if(!it) return;
+    if(o.type==="resolve"){ it.status="解決済"; it.log.push(o.stamp+"　解決済にした　"+(o.memo||"")); }
+    if(o.type==="reopen"){ it.status="未解決"; it.log.push(o.stamp+"　未解決に戻した"); }
+  });
+}
+function stamp(){ const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")+" "+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"); }
+function act(o){ o.stamp=stamp(); ops.push(o); save(); rebuild(); renderAll(); }
+
+const sevTag = s => `<span class="tag ${s==="高"?"t-hi":s==="中"?"t-mid":"t-lo"}">${s}</span>`;
+const stTag = s => s==="解決済"?`<span class="tag t-done">${s}</span>`:`<span class="tag t-mid">${s}</span>`;
+const age = d => Math.max(0,Math.round((TODAY - new Date(d+"T00:00:00"))/864e5));
+const openOf = id => issues.filter(x=>x.carId===id && x.status!=="解決済");
+
+/* ---------- 目的1 表示 ---------- */
+function renderClean(){
+  $("#rawCarN").textContent=RAW_CARS.length; $("#rawIssueN").textContent=RAW_ISSUES.length;
+  $("#rules").innerHTML = rules.map(r=>`<li><span class="cnt">${counts[r.k]}行</span>${esc(r.t)}<br><small>${esc(r.d)}</small></li>`).join("");
+  $("#diff").innerHTML = diffs.map(d=>`<tr><td>${d.src}</td><td>${d.row}</td><td>${rules.findIndex(r=>r.k===d.k)+1}</td><td><del>${esc(d.before)}</del></td><td><ins>${esc(d.after)}</ins></td></tr>`).join("");
+}
+
+/* ---------- 目的2 車両一覧 ---------- */
+let selCar=null;
+function renderCars(){
+  const open = issues.filter(x=>x.status!=="解決済");
+  $("#kpis").innerHTML = [
+    ["保有台数",cars.length+"台"],["貸出中",cars.filter(c=>c.status==="貸出中").length+"台"],
+    ["待機",cars.filter(c=>c.status==="待機").length+"台"],
+    ["整備中",cars.filter(c=>c.status==="整備中").length+"台"],
+    ["未解決の不具合がある車両",new Set(open.map(x=>x.carId)).size+"台",true]
+  ].map(k=>`<div class="kpi${k[2]?" warn":""}"><b>${k[1]}</b><span>${k[0]}</span></div>`).join("");
+  const st=$("#fStatus").value, mk=$("#fMake").value, op=$("#fOpen").value, q=$("#fQ").value.trim();
+  const list = cars.filter(c=>(!st||c.status===st)&&(!mk||c.make===mk)&&(!op||openOf(c.id).length)&&(!q||(c.id+c.make+c.model).includes(q)));
+  $("#carRows").innerHTML = list.length? list.map(c=>{const n=openOf(c.id).length;return `<tr class="click${c.id===selCar?" sel":""}" tabindex="0" data-id="${c.id}"><td>${c.id}</td><td>${c.make}</td><td>${esc(c.model)}</td><td>${c.year}</td><td>${c.km.toLocaleString("ja-JP")} km</td><td>${c.status}</td><td>${n?`<span class="tag t-mid">${n}件</span>`:"－"}</td></tr>`}).join("") : `<tr><td colspan="7" class="empty">条件に合う車両がありません。絞り込みを外してください。</td></tr>`;
+  renderCarPanel();
+}
+function renderCarPanel(){
+  const c=cars.find(x=>x.id===selCar); if(!c) return;
+  const rel = issues.filter(x=>x.carId===c.id);
+  $("#carPanel").innerHTML = `<h2>${c.id}　${c.make} ${esc(c.model)}</h2>
+   <dl><dt>年式</dt><dd>${c.year}年</dd><dt>走行距離</dt><dd>${c.km.toLocaleString("ja-JP")} km</dd><dt>状態</dt><dd>${c.status}</dd></dl>
+   <h3>この車両の不具合（${rel.length}件）</h3>
+   ${rel.length? `<div class="scroll"><table><tbody>${rel.map(x=>`<tr class="click" tabindex="0" data-go="${x.id}"><td>${x.id}</td><td>${sevTag(x.sev)}</td><td>${esc(x.title)}</td><td>${stTag(x.status)}</td></tr>`).join("")}</tbody></table></div><p class="log" style="padding:0">行を選ぶと、受付箱でその不具合を開きます。</p>`:`<p class="empty">この車両の不具合はありません。</p>`}`;
+  $("#carPanel").querySelectorAll("tr[data-go]").forEach(tr=>{ const go=()=>{ selIssue=tr.dataset.go; $("#iStatus").value=""; show("inbox"); renderInbox(); }; tr.onclick=go; tr.onkeydown=e=>{ if(e.key==="Enter") go(); }; });
+}
+
+/* ---------- 目的3 受付箱 ---------- */
+let selIssue=null;
+function renderInbox(){
+  const open=issues.filter(x=>x.status!=="解決済");
+  $("#ikpis").innerHTML=[["未解決",open.length+"件"],["重要度 高 の未解決",open.filter(x=>x.sev==="高").length+"件",true],["解決済",issues.filter(x=>x.status==="解決済").length+"件"],["車両不明で確認待ち",held.length+"件"]]
+   .map(k=>`<div class="kpi${k[2]?" warn":""}"><b>${k[1]}</b><span>${k[0]}</span></div>`).join("");
+  const s=$("#iStatus").value, v=$("#iSev").value;
+  const rank={"高":0,"中":1,"低":2};
+  const list=issues.filter(x=>(s===""||(s==="open"?x.status!=="解決済":x.status===s))&&(!v||x.sev===v))
+    .sort((a,b)=>rank[a.sev]-rank[b.sev]||age(b.date)-age(a.date));
+  $("#issueRows").innerHTML = list.length? list.map(x=>{const c=cars.find(y=>y.id===x.carId);return `<tr class="click${x.id===selIssue?" sel":""}" tabindex="0" data-id="${x.id}"><td>${x.id}</td><td>${sevTag(x.sev)}</td><td>${esc(x.title)}</td><td>${x.carId} ${c?esc(c.model):""}</td><td>${age(x.date)}日</td><td>${stTag(x.status)}</td></tr>`}).join("") : `<tr><td colspan="6" class="empty">この条件の不具合はありません。</td></tr>`;
+  renderIssuePanel();
+}
+function renderIssuePanel(){
+  const x=issues.find(y=>y.id===selIssue); if(!x) return;
+  const c=cars.find(y=>y.id===x.carId);
+  $("#issuePanel").innerHTML=`<h2>${x.id}　${esc(x.title)}</h2>
+   <dl><dt>重要度</dt><dd>${sevTag(x.sev)}</dd><dt>車両</dt><dd>${x.carId}　${c?c.make+" "+esc(c.model):""}</dd><dt>受付日</dt><dd>${x.date}（${age(x.date)}日経過）</dd><dt>状態</dt><dd>${stTag(x.status)}</dd></dl>
+   ${x.status!=="解決済"?`<h3>解決する</h3><label style="display:block">対応の記録<textarea id="rMemo" rows="2" style="width:100%" placeholder="例：タイヤ交換済み"></textarea></label><div class="row"><button class="btn" id="rDo">解決済にする</button></div><p id="rMsg" class="log" style="padding:0"></p>`
+   :`<div class="row"><button class="btn ghost" id="oDo">未解決に戻す</button></div>`}
+   <h3>操作の記録</h3>${x.log.length?`<ul class="log">${x.log.map(l=>`<li>${esc(l)}</li>`).join("")}</ul>`:`<p class="empty" style="padding:0">まだ操作はありません。</p>`}`;
+  if($("#rDo")) $("#rDo").onclick=()=>{ const m=$("#rMemo").value.trim(); if(!m){ $("#rMsg").textContent="何をしたかを書いてから解決にしてください。"; return; } act({type:"resolve",id:x.id,memo:m}); };
+  if($("#oDo")) $("#oDo").onclick=()=>act({type:"reopen",id:x.id});
+}
+
+/* ---------- 画面の切り替えと共通 ---------- */
+function renderAll(){ renderCars(); renderInbox(); }
+function show(v){
+  document.querySelectorAll("nav button").forEach(b=>b.setAttribute("aria-selected", b.dataset.v===v?"true":"false"));
+  ["clean","cars","inbox","map"].forEach(k=>$("#v-"+k).hidden = k!==v);
+}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{ show(b.dataset.v); try{ history.replaceState(null,"","#"+b.dataset.v);}catch(e){} });
+[...new Set(cars.map(c=>c.make))].forEach(m=>$("#fMake").insertAdjacentHTML("beforeend",`<option>${m}</option>`));
+["#fStatus","#fMake","#fOpen"].forEach(s=>$(s).onchange=renderCars); $("#fQ").oninput=renderCars;
+["#iStatus","#iSev"].forEach(s=>$(s).onchange=renderInbox);
+function pick(tb,fn){ $(tb).addEventListener("click",e=>{const tr=e.target.closest("tr[data-id]"); if(tr) fn(tr.dataset.id);}); $(tb).addEventListener("keydown",e=>{ if(e.key==="Enter"){const tr=e.target.closest("tr[data-id]"); if(tr) fn(tr.dataset.id);} }); }
+pick("#carRows",id=>{ selCar=id; renderCars(); });
+pick("#issueRows",id=>{ selIssue=id; renderInbox(); });
+$("#reset").onclick=()=>{ ops=[]; save(); rebuild(); selIssue=null; $("#issuePanel").innerHTML='<p class="empty">一覧の行を選ぶと、対応の記録を書いて解決にできます。</p>'; renderAll(); };
+rebuild(); renderClean(); renderAll();
+const h=(location.hash||"").slice(1); if(["clean","cars","inbox","map"].includes(h)) show(h);
+})();
+</script>
+</body>
+</html>
