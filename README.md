@@ -187,7 +187,7 @@ python3 -m unittest discover -s tests -v   # テスト
 | アクション型を、AIに渡す道具の定義にする（`tool_definitions`） | Palantir Technologies「Speedrun: Your First AIP Workflow」2026年10月24日 | https://verify.skilljar.com/c/mn24dnddn7sk |
 | AIエージェントの提案を、アクションの形と理由つきで受け、人が承認して反映する（`propose`、`approve`、`decline`） | Palantir Technologies「Speedrun: Your First Agentic AIP Workflow」2026年10月24日 | https://verify.skilljar.com/c/wpfcqyvznoie |
 | 理由の入力を求める操作、個人情報の印と伏せ字、操作の記録（`needs_reason`、`Prop.marking`、`read`、`audit_log`） | Palantir Technologies「Deep Dive: Data Protection Tools in Foundry」2026年10月24日 | https://verify.skilljar.com/c/ftf84akuvcjb |
-| Foundry と AIP の用語での整理（`index.html` の「Foundryとの対応」） | Palantir Technologies「Foundry & AIP Builder Foundations Quiz」2026年10月24日 | https://verify.skilljar.com/c/uri2mxcyfmts |
+| Foundry と AIP の用語での整理（`index.html` の「Foundryとの対応」） | Palantir Technologies「Foundry & AIP Builder Foundations」2026年10月24日 | https://verify.skilljar.com/c/uri2mxcyfmts |
 
 Palantir Learn の修了証は全部で18件あり、どれも証明書番号で https://verify.skilljar.com/c/【番号】 から照会できます。
 
