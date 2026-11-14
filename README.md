@@ -11,3 +11,9 @@
 車両と不具合のデータはすべて架空です。操作の記録は、開いた端末のブラウザにだけ保存されます。
 
 Palantir Learn の修了証（Badge of Completion）18件は、各証明書番号で https://verify.skilljar.com/c/【番号】 から照会できます。
+
+## 根拠（学習）
+
+| 機能 | 裏付けになる学習（発行元・名称・発行日） | 照会先（Credly） |
+|---|---|---|
+| 車両一覧の絞り込みと詳細表示 | Amazon Web Services Training and Certification「AWS Knowledge: Business Intelligence - Training Badge」2025年11月10日 | https://www.credly.com/badges/47e6d276-9782-4f77-ba7a-f60e486e7ed2 |
